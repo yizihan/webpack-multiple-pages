@@ -101,3 +101,56 @@ exports.createNotifierCallback = () => {
     })
   }
 }
+
+// glob 允许使用 * 等符号读取文件名
+const glob = require('glob')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+// 获取相应页面总路径
+const PAGE_PATH = path.resolve(__dirname, '../src/pages')
+const merge = require('webpack-merge')
+
+// 多入口配置
+exports.entries = function () {
+  // 获取每个子文件下的 xx.js 入口文件
+  // ./src/pages/about/about.js
+  var entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
+  var map = {}
+  entryFiles.forEach((filePath) => {
+    // filename = about
+    var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+    map[filename] = filePath
+  })
+  return map
+  // {
+  //    'about': './src/pages/about/about.js'
+  //    ...
+  // }
+}
+
+// 多页面输出
+// 读取每个子文件夹下的 xx.html 文件，然后放入数组中
+exports.htmlPlugin = function () {
+  let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
+  let arr = []
+  entryHtml.forEach((filePath) => {
+    var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+    let conf = {
+      template: filePath,
+      filename: filename + '.html',
+      // 打包后的html页面引用的js文件
+      chunks: ['manifest', 'vendor', filename],
+      inject: true
+    }
+    if (process.env.NODE_ENV === 'production') {
+      conf = merge(conf, {
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true
+        }
+      })
+    }
+    arr.push(new HtmlWebpackPlugin(conf))
+  })
+  return arr
+}

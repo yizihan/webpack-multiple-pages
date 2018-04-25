@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/Home'
-import Page1 from '@/modules/page1/App'
+import Home from '@/components/about/Home'
+import Main from '@/components/about/Main'
 
 Vue.use(Router)
 
@@ -9,13 +9,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
-      path:'/page1',
-      name: 'page1',
-      component: Page1
+      path: '/vue',
+      name: 'vue',
+      component: Main
+    },
+    {
+      path: '/webpack',
+      name: 'webpack',
+      component: Main
     }
   ]
 })

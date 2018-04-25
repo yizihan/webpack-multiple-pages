@@ -1,4 +1,7 @@
-# webpack-mult-entries
+
+
+
+# webpack-multiple-pages
 
 > A Vue.js project
 
