@@ -15,11 +15,12 @@ html, body {
   color: #2c3e50;
 }
 .main-wrapper {
-  height: 100%;
+  height: calc(100% - 90px);
 }
 .main-wrapper {
   background-color: #ccc;
   position: relative;
+  height: calc(100% - 90px);
 }
 .txt {
   color: #fff;
