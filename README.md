@@ -1,9 +1,8 @@
-
-
-
 # webpack-multiple-pages
 
-> A Vue.js project
+配置多入口和多出口，每个入口都可以是一个完整的Vue项目。Vue(2.5.2)  Webpack(3.6.0)
+
+![Screenshot](./multiple-pages.png)
 
 ## Build Setup
 
